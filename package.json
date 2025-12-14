@@ -1,0 +1,28 @@
+{
+    "name": "lombardia-medico-finder",
+    "version": "1.0.0",
+    "description": "Automated tool to find doctors on Lombardia Health Portal",
+    "main": "dist/index.js",
+    "scripts": {
+        "build": "tsc",
+        "start": "node dist/index.js",
+        "dev": "ts-node src/index.ts",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+        "dotenv": "^16.3.0",
+        "fs-extra": "^11.1.0",
+        "puppeteer": "24.15.0",
+        "telegraf": "^4.12.0",
+        "winston": "^3.10.0"
+    },
+    "author": "",
+    "license": "MIT",
+    "devDependencies": {
+        "@types/fs-extra": "^11.0.4",
+        "@types/node": "^25.0.2",
+        "@types/puppeteer": "^5.4.7",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.9.3"
+    }
+}
