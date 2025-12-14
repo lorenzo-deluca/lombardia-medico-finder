@@ -2,7 +2,7 @@ services:
   app:
     build: .
     container_name: medico-finder
-    restart: unless-stopped
+    restart: on-failure:3
     ports:
       - "5900:5900"
     volumes:

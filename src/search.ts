@@ -40,6 +40,12 @@ export async function startSearchLoop(
             await page.goto(SEARCH_URL, { waitUntil: 'networkidle2' });
             await page.waitForSelector(SELECTOR_MUNICIPALITY, { timeout: 30000 });
 
+            if (isFirstRun) {
+                const startupScreenshotPath = await handleScreenshot(page, `startup-${Date.now()}.png`);
+                await telegram.sendPhoto(startupScreenshotPath, 'ℹ️ Bot started. Checking for doctors...');
+                isFirstRun = false;
+            }
+
             const options = await page.evaluate((selector: string) => {
                 const select = document.querySelector(selector) as HTMLSelectElement | null;
                 if (!select) return [];
@@ -70,12 +76,6 @@ export async function startSearchLoop(
                 const content = await page.content();
                 const doctorsAvailable = !content.includes(NO_DOCTORS_FOUND_TEXT);
 
-                if (isFirstRun) {
-                    const startupScreenshotPath = await handleScreenshot(page, `startup-${Date.now()}.png`);
-                    await telegram.sendPhoto(startupScreenshotPath, 
-                        `ℹ️ Startup Check for **${option.text}**.\nResult: ${doctorsAvailable ? 'Doctors available!' : 'No doctors found'}`);
-                    isFirstRun = false;
-                }
 
                 if (doctorsAvailable) {
                     logger.info(`MATCH FOUND for ${option.text}`);
